@@ -23,11 +23,36 @@ class Purchase extends Model
     protected static function booted()
     {
         static::created(function ($purchase) {
-            $stock = Stock::firstOrNew(['product_id' => $purchase->product_id]);
-            $stock->available_stock = ($stock->available_stock ?? 0) + $purchase->quantity;
-            $stock->purchase_id = $purchase->id;
-            $stock->save();
-        });
+        $latestStock = Stock::where('product_id', $purchase->product_id)
+        ->where('price',$purchase->buying_price)
+        ->first();
+
+    if ($latestStock)
+    {
+        $latestPurchase = Purchase::find($latestStock->purchase_id);
+        if ($latestPurchase && $latestPurchase->buying_price == $purchase->buying_price)
+        {
+            $latestStock->purchase_id = $latestPurchase->id;
+            $latestStock->available_stock += $purchase->quantity;
+            $latestStock->save();
+        } else {
+            $newStock = new Stock();
+            $newStock->product_id = $purchase->product_id;
+            $newStock->available_stock = $purchase->quantity;
+            $newStock->purchase_id = $purchase->id;
+            $newStock->price = $purchase->buying_price;
+            $newStock->save();
+        }
+    } else {
+        $newStock = new Stock();
+        $newStock->product_id = $purchase->product_id;
+        $newStock->available_stock = $purchase->quantity;
+        $newStock->purchase_id = $purchase->id;
+        $newStock->price = $purchase->buying_price;
+        $newStock->save();
+    }
+});
+
     }
 
     public function Product()

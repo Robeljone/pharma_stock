@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Product;
+use App\Models\Purchase;
 class Stock extends Model
 {
     protected $table = 'stocks';
@@ -14,5 +15,14 @@ class Stock extends Model
         'available_stock',
         'status'
     ];
+public function Product()
+    {
+        return $this->hasOne(Product::class,'id','product_id');
+    }
+    public function Purchase()
+    {
+        return $this->hasOne(Purchase::class,'id','purchase_id');
+    }
+
 
 }

@@ -14,34 +14,33 @@ class StocksTable
     {
         return $table
             ->columns([
-                TextColumn::make('product_id')
+                TextColumn::make('Product.name')
+                    ->label('Product')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('available_stock')
+                    ->label('Available')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('status')
+                TextColumn::make('Purchase.buying_price')
+                    ->label('Buying Price')
+                    ->numeric()
+                    ->money()
+                    ->sortable(),
+                TextColumn::make('Purchase.exp_date')
+                    ->label('Expire Date')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('Purchase.created_at')
+                    ->label('Purchase Date')
+                    ->numeric()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
                 EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
             ]);
     }
 }
