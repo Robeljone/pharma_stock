@@ -14,7 +14,8 @@ class SalesTable
     {
         return $table
             ->columns([
-                TextColumn::make('product_id')
+                TextColumn::make('Product.name')
+                    ->label('Product Name')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('quantity')
