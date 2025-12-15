@@ -7,6 +7,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
+use App\Filament\Widgets\MyStat;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -40,8 +41,7 @@ class StockPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -61,6 +61,7 @@ class StockPanelProvider extends PanelProvider
             NavigationGroup::make()->label('Managment'),
             NavigationGroup::make()->label('Settings'),
             NavigationGroup::make()->label('Reports'),
-            ]);
+            ])
+            ->sidebarFullyCollapsibleOnDesktop();;
     }
 }

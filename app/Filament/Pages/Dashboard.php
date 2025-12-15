@@ -7,4 +7,12 @@ use Filament\Pages\Page;
 class Dashboard extends Page
 {
     protected string $view = 'filament.pages.dashboard';
+    public function getHeaderWidgets(): array
+    {
+        return [
+            \App\Filament\Widgets\MyStat::class,
+            \App\Filament\Widgets\MonthlySales::class,
+            \App\Filament\Widgets\ProfitLost::class,
+        ];
+    }
 }
