@@ -60,7 +60,6 @@ class SalesForm
                         }
                     })
                     ->searchable(),
-
                 Hidden::make('product_id'),
                 Hidden::make('buying_price'),
                 Hidden::make('buy_total'),
@@ -71,12 +70,33 @@ class SalesForm
                     ->numeric()
                     ->reactive()
                     ->afterStateUpdated(function ($state, $set, $get) {
+                        // $productId = $get('product_id');
+                        // if ($productId) {
+                        // $product = \App\Models\Purchase::find($productId);
+                        // $maxQty = $product ? $product->available_stock : 0;
+                        // if ($state > $maxQty) {
+                        //     $set('quantity', $maxQty);
+                        // }
+                        // }
                         $buyingPrice = $get('buying_price') ?? 0;
                         $sellingPrice = $get('selling_price') ?? 0;
-
                         $set('buy_total', $state * $buyingPrice);
                         $set('profit', ($state * $sellingPrice) - ($state * $buyingPrice));
-                    }),
+                    })
+                    ->rules([
+                    function ($attribute, $value, $fail) {
+                        $productId = request()->input('product_id');
+                        if (!$productId) return;
+
+                        $product = \App\Models\Purchase::find($productId);
+
+                        if (!$product) {
+                            $fail('Selected product not found.');
+                        } elseif ($value > $product->available_stock) {
+                            $fail('Requested quantity exceeds available stock (' . $product->available_stock . ').');
+                        }
+                    },
+                ]),
                 TextInput::make('selling_price')
                     ->required()
                     ->numeric()
