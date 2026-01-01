@@ -18,8 +18,6 @@ class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
     protected static ?string $recordTitleAttribute = 'Stock';
 
     public static function form(Schema $schema): Schema

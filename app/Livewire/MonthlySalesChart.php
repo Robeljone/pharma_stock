@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Livewire;
 
 use Filament\Widgets\ChartWidget;
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 
-class MyWidget extends ChartWidget
+class MonthlySalesChart extends ChartWidget
 {
-    protected ?string $heading = 'My Widget';
+    protected ?string $heading = 'Monthly Sales Chart';
 
     protected function getData(): array
     {

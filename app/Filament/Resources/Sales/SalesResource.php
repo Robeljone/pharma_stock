@@ -18,8 +18,6 @@ class SalesResource extends Resource
 {
     protected static ?string $model = Sales::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
     protected static ?string $recordTitleAttribute = 'Sales';
 
     public static function form(Schema $schema): Schema

@@ -22,7 +22,8 @@ class Purchase extends Model
 
     protected static function booted()
     {
-        static::created(function ($purchase) {
+        static::created(function ($purchase) 
+        {
         $latestStock = Stock::where('product_id', $purchase->product_id)
         ->where('price',$purchase->buying_price)
         ->first();

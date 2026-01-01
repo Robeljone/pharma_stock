@@ -7,6 +7,8 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class PurchasesTable
 {
@@ -37,8 +39,17 @@ class PurchasesTable
                     ->numeric()
                     ->sortable(),
             ])
+
             ->filters([
-                //
+            Filter::make('expire_date')
+                ->label('Near Expiry (15 days)')
+                ->toggle()
+                 ->default(
+                        fn (): bool => (bool) request()->input('tableFilters.is_active.is_active', false)
+                )
+                ->query(fn (Builder $query) =>
+                    $query->whereDate('exp_date', '<=', now()->addDays(15))
+                ),
             ])
             ->recordActions([
                 EditAction::make(),

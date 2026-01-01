@@ -7,6 +7,8 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
 
 class StocksTable
 {
@@ -37,7 +39,14 @@ class StocksTable
                     ->sortable(),
             ])
             ->filters([
-                //
+            Filter::make('low_stcock')
+                ->label('Near Expiry (15 days)')
+                ->query(fn (Builder $query) =>
+                    $query->whereBetween('exp_date', [
+                        now(),
+                        now()->addDays(15),
+                    ])
+                ),
             ])
             ->recordActions([
                 EditAction::make(),

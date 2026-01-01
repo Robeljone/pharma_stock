@@ -16,4 +16,12 @@ class ListPurchases extends ListRecords
             CreateAction::make(),
         ];
     }
+     public function applyExpireDateFilter(): void
+    {
+        $this->tableFilters = [
+            'expire_date' => [
+                'isActive' => true,
+            ],
+        ];
+    }
 }

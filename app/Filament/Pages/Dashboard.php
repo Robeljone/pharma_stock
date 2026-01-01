@@ -11,8 +11,7 @@ class Dashboard extends Page
     {
         return [
             \App\Filament\Widgets\MyStat::class,
-            \App\Filament\Widgets\MonthlySales::class,
-            \App\Filament\Widgets\ProfitLost::class,
+            \App\Filament\Widgets\MonthlySalesChart::class,
         ];
     }
 }
