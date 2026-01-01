@@ -12,6 +12,7 @@ class Dashboard extends Page
         return [
             \App\Filament\Widgets\MyStat::class,
             \App\Filament\Widgets\MonthlySalesChart::class,
+            \App\Filament\Widgets\MtdSalesProfitChart::class,
         ];
     }
 }

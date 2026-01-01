@@ -36,7 +36,7 @@ class MonthlySalesChart extends ChartWidget
                 [
                     'label' => 'Sales',
                     'data' => $months->map(fn($m, $i) => $sales->get($i+1, 0)),
-                    'backgroundColor' => '#1E40AF',
+                    'backgroundColor' => '#e9c009ff',
                 ],
                 [
                     'label' => 'Profit',

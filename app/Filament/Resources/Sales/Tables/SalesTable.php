@@ -7,7 +7,8 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\DatePicker;
 class SalesTable
 {
     public static function configure(Table $table): Table
@@ -41,7 +42,16 @@ class SalesTable
                     ->sortable(),
             ])
             ->filters([
-                //
+              Filter::make('date')
+    ->form([
+        DatePicker::make('created_from')->label('From'),
+        DatePicker::make('created_until')->label('To'),
+    ])
+    ->query(function ($query, array $data) {
+        return $query
+            ->when($data['created_from'], fn($q) => $q->whereDate('sales_date', '>=', $data['created_from']))
+            ->when($data['created_until'], fn($q) => $q->whereDate('sales_date', '<=', $data['created_until']));
+    }),
             ])
             ->recordActions([
                 EditAction::make(),

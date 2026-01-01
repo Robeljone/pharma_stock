@@ -20,7 +20,7 @@ class MyStat extends StatsOverviewWidget
         ->whereDate('sales.created_at', $today)
         ->selectRaw('
             SUM(sales.sell_total) as total_sales,
-            SUM((sales.selling_price - sales.buying_price) * sales.quantity) as profit
+            SUM(sales.profit) as total_profit
         ')
         ->first();
 
@@ -39,7 +39,7 @@ class MyStat extends StatsOverviewWidget
             Stat::make('Daily Sales Total', number_format($daily->total_sales ?? 0) . ' Birr')
             ->icon('heroicon-o-banknotes')
             ->color('success'),
-            Stat::make('Daily Sales Profit', number_format($daily->profit ?? 0) . ' Birr')
+            Stat::make('Daily Sales Profit', number_format($daily->total_profit ?? 0) . ' Birr')
             ->icon('heroicon-o-arrow-trending-up')
             ->color('success'),
              Stat::make('Low Stock', $lowStock . ' Items')
